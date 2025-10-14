@@ -1,24 +1,45 @@
-# Quote To Order Service
-Quote-to-Order API that allows internal users to:
-1. Create and update product Quotes
-2. Approve quotes after validation
-3. Convert an approved quote into an Order
+# 🧾 Quote-to-Order Service
 
-## Run locally:
-    mvn spring-boot:run
-or provide the spring profile
-    
-    SPRING_PROFILES_ACTIVE=dev mvn spring-boot:run
+The **Quote-to-Order Service** is a Spring Boot–based API that enables internal users to manage product quotes and convert them into orders.
 
+### Core Features
+1. **Create & Update Quotes** — Draft and modify product quotes.  
+2. **Quote Approval Workflow** — Validate and approve quotes before conversion.  
+3. **Order Conversion** — Seamlessly convert approved quotes into confirmed orders.
 
-## Run docker locally:
-### 1. Build the docker image
-    docker build -t quote-to-order-service:latest .
-    
-### 2. Run the image in a container
-    docker run --rm --env-file .env -d -p 8080:8080 --name quote-to-order-service quote-to-order-service:latest
-### 3. Run by providing env explicitly
-    docker run --rm -d \
+---
+
+## ⚙️ Run Locally (No Docker)
+
+Run the service directly using Maven:
+
+```bash
+mvn spring-boot:run
+```
+
+or specify a Spring profile:
+
+```bash
+SPRING_PROFILES_ACTIVE=dev mvn spring-boot:run
+```
+
+---
+
+## 🐳 Run with Docker
+
+### 1. Build the Docker image
+```bash
+docker build -t quote-to-order-service:latest .
+```
+
+### 2. Run the container using `.env` file
+```bash
+docker run --rm --env-file .env -d -p 8080:8080 --name quote-to-order-service quote-to-order-service:latest
+```
+
+### 3. Run by specifying environment variables manually
+```bash
+docker run --rm -d \
     -p 8080:8080 \
     -e SPRING_PROFILES_ACTIVE=dev \
     -e SPRING_DATASOURCE_URL="jdbc:postgresql://<DB_HOST>:5432/<DB_NAME>" \
@@ -29,15 +50,56 @@ or provide the spring profile
     -e SPRING_REDIS_PASSWORD="<REDIS_PASS>" \
     --name quote-to-order-service \
     quote-to-order-service:latest
+```
 
-## Run using docker compose
-    docker compose up --build
+---
 
-## Generate Maven Wrapper:
-    mvn -N wrapper:wrapper
+## 🧩 Run with Docker Compose
+```bash
+docker compose up --build
+```
 
-## Clean and recompile
-    mvn clean install
+## Stops containers and removes containers
+```bash
+docker compose down
+```
 
-## Clean and test
-    mvn clean test
+This will automatically start all required services (database, Redis, and the application).
+
+---
+
+## 🧰 Maven Commands
+
+### Generate Maven Wrapper
+```bash
+mvn -N wrapper:wrapper
+```
+
+### Clean and Rebuild
+```bash
+mvn clean install
+```
+
+### Clean and Run Tests
+```bash
+mvn clean test
+```
+
+---
+
+## 🐳 Docker House Keeping
+### clean up dangling images and stopped containers safely:
+```bash
+docker system prune -f
+```
+### Remove unused volumes and networks
+```bash
+docker system prune -a --volumes -f
+```
+
+## 🌐 Environment Profiles
+| Profile | Description |
+|----------|--------------|
+| `docker` | Local dockerized development environment |
+| `dev` | Local development environment (e.g., Docker Compose setup). |
+| `prod` | Production mode (uses cloud-based services like AWS RDS or Google Cloud SQL & Redis). |
