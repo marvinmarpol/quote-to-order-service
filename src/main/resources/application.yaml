@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: quotetoorder
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+server:
+  port: ${PORT:8080}
+
+logging:
+  level:
+    root: DEBUG
