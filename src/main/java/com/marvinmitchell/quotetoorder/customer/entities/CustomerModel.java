@@ -1,5 +1,8 @@
-package com.marvinmitchell.quotetoorder.customer;
+package com.marvinmitchell.quotetoorder.customer.entities;
 
+import java.util.UUID;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,10 +22,13 @@ import lombok.Setter;
 public class CustomerModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String name;
+
+    @Column(unique = true)
     private String email;
+
     private String password;
 
 }

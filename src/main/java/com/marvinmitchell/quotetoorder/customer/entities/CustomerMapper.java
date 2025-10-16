@@ -1,4 +1,4 @@
-package com.marvinmitchell.quotetoorder.customer;
+package com.marvinmitchell.quotetoorder.customer.entities;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -7,4 +7,5 @@ import org.mapstruct.Mapping;
 public interface CustomerMapper {
     @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())")
     CustomerDto toDto(CustomerModel customerModel);
+    CustomerModel toEntityModel(RegisterCustomerRequest request);
 }
