@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.marvinmitchell.quotetoorder.customer.entities.CustomerDto;
 import com.marvinmitchell.quotetoorder.customer.entities.CustomerMapper;
 import com.marvinmitchell.quotetoorder.customer.entities.RegisterCustomerRequest;
+import com.marvinmitchell.quotetoorder.customer.entities.UpdateCustomerRequest;
 
 import lombok.AllArgsConstructor;
 
@@ -26,6 +27,28 @@ public class CustomerService {
         customerRepository.save(customer);
 
         return customerMapper.toDto(customer);
+    }
+
+    public CustomerDto updateCustomer(UpdateCustomerRequest request, UUID id) {
+        var customer = customerRepository.findById(id).orElse(null);
+        if (customer == null) {
+            return null;
+        }
+
+        customerMapper.update(request, customer);
+        customerRepository.save(customer);
+
+        return customerMapper.toDto(customer);
+    }
+
+    public UUID deleteCustomer(UUID id) {
+        var customer = customerRepository.findById(id).orElse(null);
+        if (customer == null) {
+            return null;
+        }
+
+        customerRepository.delete(customer);
+        return customer.getId();
     }
 
     public List<CustomerDto> getAllCustomers(String sortBy) {

@@ -7,10 +7,12 @@ import java.util.UUID;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.marvinmitchell.quotetoorder.customer.entities.CustomerDto;
 import com.marvinmitchell.quotetoorder.customer.entities.RegisterCustomerRequest;
+import com.marvinmitchell.quotetoorder.customer.entities.UpdateCustomerRequest;
 
 import lombok.AllArgsConstructor;
 
@@ -41,6 +44,27 @@ public class CustomerController {
         var uri = uriBuilder.path("/customers/{id}").buildAndExpand(customerDto.getId()).toUri();
 
         return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomerDto> updateCustomer(
+            @PathVariable(name = "id") UUID id,
+            @RequestBody UpdateCustomerRequest request) {
+        CustomerDto customerDto = customerService.updateCustomer(request, id);
+        if (customerDto == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(customerDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<UUID> deleteCustomer(
+            @PathVariable(name = "id") UUID id) {
+        UUID deletedId = customerService.deleteCustomer(id);
+        if (deletedId == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping()
