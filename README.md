@@ -79,6 +79,10 @@ mvn -N wrapper:wrapper
 ```bash
 mvn clean install
 ```
+or run this command to clean the maven project and repackage the compiled code, skipping unit test
+```bash
+mvn clean install -Dmaven.test.skip=true
+```
 
 ### Clean and Run Tests
 ```bash

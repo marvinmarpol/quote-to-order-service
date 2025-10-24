@@ -26,7 +26,7 @@ public class CustomerModel {
     private UUID id;
     private String name;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
     private String password;

@@ -23,6 +23,7 @@ import com.marvinmitchell.quotetoorder.customer.entities.CustomerDto;
 import com.marvinmitchell.quotetoorder.customer.entities.RegisterCustomerRequest;
 import com.marvinmitchell.quotetoorder.customer.entities.UpdateCustomerRequest;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -34,6 +35,7 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<CustomerDto> createCustomer(
+            @Valid
             @RequestBody RegisterCustomerRequest payload,
             UriComponentsBuilder uriBuilder) {
         var customerDto = customerService.createCustomer(payload);
